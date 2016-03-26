@@ -50,19 +50,19 @@ class UserController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(UsuarioRequest $request, Exception $exception)
+	public function store(UsuarioRequest $request)
 	{
-		$datos = DB::select('call usuariosInsert(?,?,?,?,?,?,?)',
+		$clave = Hash::make($request['password']);
+		$creacion = DB::select('call usuariosInsert(?,?,?,?,?,?,?)',
 			array(Input::get('enterprise'),
 				Input::get('name'),
 				Input::get('email'),
 				Input::get('username'),
-				Input::get('password'),
+				$clave,
 				Input::get('create_content'),
 				Input::get('active')));
-		Session::flash('datos', $datos);
-		return $datos;
-//		return view('usuario.create');
+		Session::flash('creacion', $creacion);
+		return redirect('usuario');
 	}
 
 	public function editarusuario(){

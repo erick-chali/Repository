@@ -37,6 +37,8 @@ class LoginController extends Controller {
 	 */
 	public function store(LoginRequest $request)
 	{
+		$activo = 1;
+		$user = array('usuario'=>$request['username'], 'password'=>$request['password']);
 		if(Auth::attempt(['usuario'=>$request['username'], 'password'=>$request['password']])){
 			return Redirect::to('usuario');
 		}

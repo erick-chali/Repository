@@ -30,9 +30,6 @@
         <div class="well">
             {{--{!! Form::open(['route'=> 'usuario.store', 'method'=>'post']) !!}--}}
 
-            {{Session::get('name')}}
-            {{ csrf_token() }}
-            {{Session::token()}}
             {{--<form action="{{ route('usuario.store') }}" method="post">--}}
             {!! Form::open(['route'=> 'usuario.store', 'method'=>'post']) !!}
                 {{--<input type="hidden" name="_token" value="{!! csrf_token() !!}">--}}

@@ -25,8 +25,8 @@ Route::controllers([
 
 //Route::get('usuario/restore', 'UserController@restore');
 Route::get('restore/{id}', array('uses' => 'UserController@restore', 'as' => 'restore'));
-Route::resource('login', 'LoginController');
-Route::get('logout', 'LoginController@logout');
-Route::resource('usuario', 'UserController');
 Route::get('/empresas', 'EnterpriseController@combo');
+Route::get('logout', 'LoginController@logout');
+Route::resource('login', 'LoginController');
+Route::resource('usuario', 'UserController');
 Route::resource('empresa', 'EnterpriseController');

@@ -15,6 +15,22 @@
     </style>
     <div class="col-lg-12 col-centered">
         {{--@if(Session::has('resultado'))--}}
+        @if(Session::has('creacion'))
+            @foreach(Session::get('creacion') as $dato)
+                @if($dato->result == 1)
+                    <div class="alert alert-success alert-dismissible" role="alert" id="alerta_actualiza">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>El usuario ha sido creado exitosamente.</p>
+
+                    </div>
+                @else
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <p>{{$dato->msj}}</p>
+                    </div>
+                @endif
+            @endforeach
+        @endif
         @if(Session::has('actualizacion'))
             @foreach(Session::get('actualizacion') as $dato)
                 @if($dato->result == 1)
