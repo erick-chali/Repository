@@ -1,0 +1,14 @@
+html{
+    height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    padding-top: 70px;
+    background-color: #f0f0f0;
+}
+footer{
+    height: 50px;
+}
+.navbar-default{
+    background-color: #f0f0f0;
+}
