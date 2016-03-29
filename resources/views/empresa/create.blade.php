@@ -1,4 +1,4 @@
-@extends('layouts/empresaMasters')
+@extends('layouts/empresaMaster')
 @section('title', 'Crear')
 @stop
 

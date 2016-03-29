@@ -34,3 +34,5 @@ Route::resource('usuario', 'UserController');
 //RUTAS PARA EMPRESAS
 Route::get('/empresas', 'EnterpriseController@combo');
 Route::resource('empresa', 'EnterpriseController');
+
+Route::get('/paises', 'CountryController@combo');
