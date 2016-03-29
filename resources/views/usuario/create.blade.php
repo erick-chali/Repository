@@ -36,7 +36,7 @@
                 <legend>Agregar nuevo usuario.</legend>
 
                 <div class="form-group">
-                    <label>C&oacute;digo empresa</label>
+                    <label>Empresa</label>
                     <select class="form-control input-sm" name="enterprise" id="enterprise"></select>
                     {{--<input type="number" class="form-control input-sm" name="enterprise" id="enterprise">--}}
                 </div>
