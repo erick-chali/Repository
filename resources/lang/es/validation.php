@@ -132,5 +132,6 @@ return [
         'subject'               => 'asunto',
         'message'               => 'mensaje',
         'enterprise'            => 'empresa',
+        'active'            => 'activo',
     ],
 ];

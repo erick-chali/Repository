@@ -11,7 +11,7 @@ class EnterpriseRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -22,7 +22,8 @@ class EnterpriseRequest extends Request {
 	public function rules()
 	{
 		return [
-			//
+			'name' => 'required',
+			'country' => 'required',
 		];
 	}
 

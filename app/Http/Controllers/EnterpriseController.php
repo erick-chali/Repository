@@ -4,6 +4,10 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Requests\EnterpriseRequest;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
+use Log;
 
 class EnterpriseController extends Controller {
 	public function __construct()
@@ -44,9 +48,14 @@ class EnterpriseController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(EnterpriseRequest $request)
 	{
-		//
+		$creacion = DB::select('call empresaInsert(?,?,?)',
+			array(Input::get('name'),
+				Input::get('country'),
+				Input::get('active')));
+		Session::flash('creacion', $creacion);
+		return redirect('empresa');
 	}
 
 	/**
@@ -68,7 +77,8 @@ class EnterpriseController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$datos = DB::select('call empresasSelect(?)', array($id));
+		return view('empresa.profile', ['datos'=>$datos]);
 	}
 
 	/**
@@ -77,9 +87,16 @@ class EnterpriseController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, EnterpriseRequest $request)
 	{
-		//
+		$actualizacion = DB::select('call empresaUpdate(?,?,?,?)',
+			array(
+				$id,
+				$request->get('name'),
+				$request->get('country'),
+				$request->get('active')));
+		Session::flash('actualizacion', $actualizacion);
+		return redirect('empresa');
 	}
 
 	/**
@@ -90,7 +107,10 @@ class EnterpriseController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$eliminacion = DB::select('call empresaDelete(?)',
+			array($id));
+		Session::flash('eliminacion', $eliminacion);
+		return redirect('empresa');
 	}
 
 }
