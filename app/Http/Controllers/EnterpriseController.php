@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class EnterpriseController extends Controller {
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+
 
 	public function combo(){
 		$comboEnterprise = DB::select('call empresasSelectAll()');
@@ -20,7 +25,8 @@ class EnterpriseController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		$resultado = DB::select('call empresasSelectAll()');
+		return view('empresa.homeempresa', ['resultado' => $resultado]);
 	}
 
 	/**

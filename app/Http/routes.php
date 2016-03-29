@@ -24,9 +24,13 @@ Route::controllers([
 ]);
 
 //Route::get('usuario/restore', 'UserController@restore');
+//RUTAS PARA USUARIOS
 Route::get('restore/{id}', array('uses' => 'UserController@restore', 'as' => 'restore'));
-Route::get('/empresas', 'EnterpriseController@combo');
 Route::get('logout', 'LoginController@logout');
 Route::resource('login', 'LoginController');
 Route::resource('usuario', 'UserController');
+
+
+//RUTAS PARA EMPRESAS
+Route::get('/empresas', 'EnterpriseController@combo');
 Route::resource('empresa', 'EnterpriseController');

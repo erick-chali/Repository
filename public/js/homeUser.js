@@ -13,6 +13,7 @@
 
     // Listen for the jQuery ready event on the document
     $(function() {
+        $('table').bootstrapTable('resetView');
         $(window).resize(function () {
             $('table').bootstrapTable('resetView');
         });
