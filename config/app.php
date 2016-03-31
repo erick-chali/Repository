@@ -146,7 +146,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 		Collective\Html\HtmlServiceProvider::class,
 		Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
-
+		Anchu\Ftp\FtpServiceProvider::class,
 	],
 
 	/*

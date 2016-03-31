@@ -23,6 +23,7 @@ Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 
+
 //Route::get('usuario/restore', 'UserController@restore');
 //RUTAS PARA USUARIOS
 Route::get('restore/{id}', array('uses' => 'UserController@restore', 'as' => 'restore'));
@@ -30,9 +31,13 @@ Route::get('logout', 'LoginController@logout');
 Route::resource('login', 'LoginController');
 Route::resource('usuario', 'UserController');
 
+Route::resource('edicion', 'DocumentController');
 
 //RUTAS PARA EMPRESAS
 Route::get('/empresas', 'EnterpriseController@combo');
 Route::resource('empresa', 'EnterpriseController');
 
 Route::get('/paises', 'CountryController@combo');
+
+//Route::get('/ftp', ['as ' => 'ftp', 'uses' => 'FtpController@index']);
+Route::resource('ftp', 'FTPController');

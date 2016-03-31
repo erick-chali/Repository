@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\UsuarioRequest;
 use App\Http\Requests\UsuarioUpdateRequest;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller {
 	public function __construct()
 	{
