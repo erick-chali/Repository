@@ -40,4 +40,11 @@ Route::resource('empresa', 'EnterpriseController');
 Route::get('/paises', 'CountryController@combo');
 
 //Route::get('/ftp', ['as ' => 'ftp', 'uses' => 'FtpController@index']);
+Route::get('view/{folder}/{filename}', array('uses' => 'FTPController@view', 'as' => 'view'));
+Route::get('download/{folder}/{filename}', array('uses' => 'FTPController@download', 'as' => 'download'));
+Route::get('/archivos', 'FTPController@loadFiles');
 Route::resource('ftp', 'FTPController');
+
+
+//RUTAS PARA OPCIONES
+Route::resource('opcion','OpcionController');

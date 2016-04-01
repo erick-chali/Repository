@@ -6,12 +6,51 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Session;
+use Response;
 
 class FTPController extends Controller {
 
 	public function __construct()
 	{
 		$this->middleware('auth');
+	}
+	public function view($folder, $filename){
+		if(file_exists(storage_path('archivos/'.$filename))){
+			$file = \File::get(storage_path('archivos/'.$filename));
+			$response = Response::make($file, 200);
+			$response->header('Content-Type', 'application/pdf');
+			return $response;
+		}else{
+			$fileLocal = storage_path('archivos/'.$filename);
+			$fileRemote = '/'.$folder.'/'.$filename;
+			$mode = 'FTP_ASCII';
+			if(\FTP::connection()->downloadFile($fileRemote,$fileLocal,$mode)){
+				$file = \File::get(storage_path('archivos/'.$filename));
+				$response = Response::make($file, 200);
+				$response->header('Content-Type', 'application/pdf');
+				return $response;
+			}
+		}
+	}
+	public function download($folder, $filename){
+		if(file_exists(storage_path('archivos/'.$filename))){
+			return response()->download(storage_path('archivos/'.$filename))->deleteFileAfterSend(true);
+		}else{
+			$fileLocal = storage_path('archivos/'.$filename);
+			$fileRemote = '/'.$folder.'/'.$filename;
+			$mode = 'FTP_ASCII';
+			if(\FTP::connection()->downloadFile($fileRemote,$fileLocal,$mode)){
+				return response()->download($fileLocal)->deleteFileAfterSend(true);
+			}
+		}
+
+	}
+	public function loadFiles(){
+		$listing = \FTP::connection()->getDirListing('/Folder');
+
+		return response()->json(
+			$listing
+		);
 	}
 	/**
 	 * Display a listing of the resource.
@@ -56,7 +95,8 @@ class FTPController extends Controller {
 //
 //		//Detenemos la funcion con un mensajes
 //		return('Operación realizada con éxito');
-		return view('archivo.homeupload');
+		$listing = \FTP::connection()->getDirListing('/Folder');
+		return view('archivo.homeupload',['listing'=>$listing]);
 	}
 
 	/**
@@ -76,37 +116,51 @@ class FTPController extends Controller {
 	 */
 	public function store()
 	{
-//		$listing = \FTP::connection()->getDirListing('/Folder');
-//		return $listing;
-		$files = Input::file('images');
-		// Making counting of uploaded images
-		$file_count = count($files);
-		// start count how many uploaded
-		$uploadcount = 0;
-		foreach($files as $file) {
 
-			//Direccion local del archivo que queremos subir
-			$fileLocal = $file;
+		$fileLocal = 'C:\Users\Erick\Downloads\LICEEEEEENSE.txt';
 
-			/*Direccion remota donde queremos subir el archivo
-			En este caso seria a la raiz del servidor*/
+		/*Direccion remota donde queremos subir el archivo
+        En este caso seria a la raiz del servidor*/
 
-			$fileRemote = '/Folder/'.$file->getClientOriginalName();;
+		$fileRemote = '/httpdocs/license.txt';
 
-			$mode = 'FTP_BINARY';
+		$mode = 'FTP_ASCII';
 
-			//Hacemos el upload
-			if(\FTP::connection()->uploadFile($fileLocal,$fileRemote,$mode)){
-				$uploadcount ++;
-			}
-		}
-		if($uploadcount == $file_count){
-			Session::flash('success', 'Upload successfully');
-			return Redirect::to('ftp');
-		}else{
-			Session::flash('success', 'Error al subirlos todos');
-			return Redirect::to('ftp');
-		}
+		//Hacemos el download
+		$archivo = \FTP::connection()->downloadFile($fileRemote,$fileLocal,$mode);
+
+		return response()->download('C:\Users\Erick\Downloads\LICEEEEEENSE.txt')->deleteFileAfterSend(false);
+
+
+//		$files = Input::file('images');
+//		// Making counting of uploaded images
+//		$file_count = count($files);
+//		// start count how many uploaded
+//		$uploadcount = 0;
+//		foreach($files as $file) {
+//
+//			//Direccion local del archivo que queremos subir
+//			$fileLocal = $file;
+//
+//			/*Direccion remota donde queremos subir el archivo
+//			En este caso seria a la raiz del servidor*/
+//
+//			$fileRemote = '/Folder/'.$file->getClientOriginalName();;
+//
+//			$mode = 'FTP_BINARY';
+//
+//			//Hacemos el upload
+//			if(\FTP::connection()->uploadFile($fileLocal,$fileRemote,$mode)){
+//				$uploadcount ++;
+//			}
+//		}
+//		if($uploadcount == $file_count){
+//			Session::flash('success', 'Upload successfully');
+//			return Redirect::to('ftp');
+//		}else{
+//			Session::flash('success', 'Error al subirlos todos');
+//			return Redirect::to('ftp');
+//		}
 	}
 
 	/**

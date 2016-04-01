@@ -27,7 +27,7 @@ return array(
         'connection1' => array(
             'host'   => '107.180.46.221',
             'port'  => 21,
-            'username' => 'herpControls',
+            'username' => 'herpControlsApp',
             'password'   => '~05>P9^_#kI0',
             'passive'   => true,
         ),
