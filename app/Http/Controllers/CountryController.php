@@ -4,6 +4,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Input;
+use Session;
+use App\Http\Requests\CountryRequest;
 
 class CountryController extends Controller {
 
@@ -21,7 +24,8 @@ class CountryController extends Controller {
 	 */
 	public function index()
 	{
-
+		$resultado = DB::select('call paisesSelectAll()');
+		return view('pais.homepais', ['resultado' => $resultado]);
 	}
 
 	/**
@@ -31,7 +35,7 @@ class CountryController extends Controller {
 	 */
 	public function create()
 	{
-		
+		return view('pais.create');
 	}
 
 	/**
@@ -39,9 +43,14 @@ class CountryController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(CountryRequest $request)
 	{
-		//
+		$creacion = DB::select('call paisesInsert(?,?)',
+			array(
+				Input::get('country'),
+				Input::get('active')));
+		Session::flash('creacion', $creacion);
+		return redirect('pais');
 	}
 
 	/**
@@ -63,7 +72,8 @@ class CountryController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$datos = DB::select('call paisesSelect(?)', array($id));
+		return view('pais.profile', ['datos'=>$datos]);
 	}
 
 	/**
@@ -72,9 +82,16 @@ class CountryController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id, CountryRequest $request)
 	{
-		//
+		$actualizacion = DB::select('call paisUpdate(?,?,?)',
+			array(
+				$id,
+				$request->get('country'),
+				$request->get('active')));
+		Session::flash('actualizacion', $actualizacion);
+		return redirect('pais');
+//		return 'ID: '.$id;
 	}
 
 	/**
@@ -85,7 +102,10 @@ class CountryController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		$eliminacion = DB::select('call paisesDelelte(?)',
+			array($id));
+		Session::flash('eliminacion', $eliminacion);
+		return redirect('pais');
 	}
 
 }

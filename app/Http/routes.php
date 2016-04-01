@@ -37,7 +37,9 @@ Route::resource('edicion', 'DocumentController');
 Route::get('/empresas', 'EnterpriseController@combo');
 Route::resource('empresa', 'EnterpriseController');
 
+//RUTAS PARA PAIS
 Route::get('/paises', 'CountryController@combo');
+Route::resource('pais', 'CountryController');
 
 //Route::get('/ftp', ['as ' => 'ftp', 'uses' => 'FtpController@index']);
 Route::get('view/{folder}/{filename}', array('uses' => 'FTPController@view', 'as' => 'view'));
