@@ -13,8 +13,8 @@ return array(
     | and private_key is the Secret key.
     |
     */
-    'public_key'    => '',
-    'private_key'    => '',
+    'public_key'    => '6LdynBoTAAAAAD0jC4SqZEJ0aM8upZrdIJmhIybb',
+    'private_key'    => '6LdynBoTAAAAAPdGrGq-zhhzdy4RQY9ICiA53RSl',
     
     /*
     |--------------------------------------------------------------------------
@@ -46,9 +46,10 @@ return array(
     |    
     */    
     'options'       => array(
-        
-        'curl_timeout' => 1,
-        
+        'lang' => 'es',
+        'curl_timeout' => 1
+
+
     ),
 
     /*

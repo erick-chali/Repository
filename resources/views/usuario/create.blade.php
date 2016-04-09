@@ -31,7 +31,7 @@
             {{--{!! Form::open(['route'=> 'usuario.store', 'method'=>'post']) !!}--}}
 
             {{--<form action="{{ route('usuario.store') }}" method="post">--}}
-            {!! Form::open(['route'=> 'usuario.store', 'method'=>'post']) !!}
+            {!! Form::open() !!}
                 {{--<input type="hidden" name="_token" value="{!! csrf_token() !!}">--}}
                 <legend>Agregar nuevo usuario.</legend>
 
@@ -69,21 +69,104 @@
             {!! Form::close() !!}
             {{--</form>--}}
             {{--{!! Form::close() !!}--}}
-            @if(count($errors) > 0)
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="alert alert-danger alert-dismissible" role="alert" id="alertaErrores">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <li>{{$error}}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                <ul>
+                </ul>
+            </div>
         </div>
     </div>
 
 @stop
 @section('scripts')
-    <script type="text/javascript" src="{{ URL::asset('js/usuarioCreate.js') }}"></script>
+    <script type="text/javascript" >
+        (function(yourcode) {
+
+            // The global jQuery object is passed as a parameter
+            yourcode(window.jQuery, window, document);
+
+        }(function($, window, document) {
+
+            // The $ is now locally scoped
+
+            // Listen for the jQuery ready event on the document
+            $(function() {
+                $('#alertaErrores').hide();
+                //Cargar empresas utilizando ajax
+                $.ajax({
+                    url: '{{URL::to('/empresas')}}',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $.each(data, function (i, empresas) {
+                            $('#enterprise').append($('<option>', {
+                                value: empresas.codigo_empresa,
+                                text: empresas.nombre
+                            }));
+                        });
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
+                $('form').submit(function (e) {
+                    var create_content = 0, active = 0;
+                    if ($('#create_content').is(':checked')) {
+                        create_content = 1;
+                    }
+                    if ($('#active').is(':checked')) {
+                        active = 1;
+                    }
+                    $.ajax({
+                        url: '{{route('usuario.store')}}',
+                        headers: {'X-CSRF-TOKEN': $('input[name=_token]').val()},
+                        type: 'POST',
+                        dataType: 'json',
+                        data: {
+                            enterprise: $('#enterprise').val(),
+                            name : $('#name').val(),
+                            email: $('#email').val(),
+                            username: $('#username').val(),
+                            password: $('#password').val(),
+                            create_content: create_content,
+                            active: active,
+
+                            _token: $('input [name = _token]').val()
+                        },
+                        success: function (data) {
+                            $('#alertaErrores ul').empty();
+                            var obj = JSON.stringify(data);
+                            console.log(data[0].result);
+                            if(data[0].result == 1){
+                                console.log('contenido: '+ data[0].contenido + ' activo: ' + data[0].activo);
+                                window.location = "{{url('/usuario')}}";
+                            }else if(data[0].result == 0){
+                                $('#alertaErrores ul').append('<li>'+ data[0].msj +'</li>');
+                                $('#alertaErrores').show();
+                            }
+                        },
+                        error: function (data) {
+
+                            $('#alertaErrores ul').empty();
+                            console.log(data.responseJSON);
+                            $.each(data.responseJSON, function (key, value) {
+                                console.log(key + ' // ' + value);
+                            });
+                            if(data.responseJSON != ''){
+                                $.each(data.responseJSON, function (key, value) {
+                                    $('#alertaErrores ul').append('<li>'+value+'</li>');
+                                });
+                                $('#alertaErrores').show();
+                            }
+
+                        }
+                    });
+                    return false;
+                });
+            });
+
+        }));
+    </script>
 @stop

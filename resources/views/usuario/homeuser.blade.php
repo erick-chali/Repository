@@ -21,7 +21,8 @@
                     <div class="alert alert-success alert-dismissible" role="alert" id="alerta_actualiza">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <p>El usuario ha sido creado exitosamente.</p>
-
+                        <p>{{$dato->contenido}}</p>
+                        <p>{{$dato->activo}}</p>
                     </div>
                 @else
                     <div class="alert alert-danger alert-dismissible" role="alert">
@@ -62,6 +63,20 @@
                     </div>
                 @endif
             @endforeach
+        @endif
+        @if(Session::has('resetok'))
+            <div class="alert alert-success alert-dismissible" role="alert" id="alerta_actualiza">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>{{Session::get('resetok')}}</p>
+
+            </div>
+        @endif
+        @if(Session::has('resetfail'))
+            <div class="alert alert-danger alert-dismissible" role="alert" id="alerta_actualiza">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>{{Session::get('resetfail')}}</p>
+
+            </div>
         @endif
             <table data-toggle="table"
                    data-classes="table table-bordered table-condensed"

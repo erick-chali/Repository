@@ -11,6 +11,7 @@ return [
     |
     */
     'accepted'             => ':attribute debe ser aceptado.',
+    'recaptcha'             => 'El campo :attribute no es correcto.',
     'active_url'           => ':attribute no es una URL válida.',
     'after'                => ':attribute debe ser una fecha posterior a :date.',
     'alpha'                => ':attribute solo debe contener letras.',

@@ -48,7 +48,7 @@
         </div>
     </div>
     @if($listing != null)
-        <table id="#tableFiles" data-toggle="table" data-classes="table table-bordered table condensed table-hover" data-height="400">
+        <table id="#tableFiles" data-toggle="table" data-classes="table table-bordered table condensed table-hover" data-height="400" data-search="true">
             <thead>
                 <tr>
                     <th data-sortable="true">Archivo</th>

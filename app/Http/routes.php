@@ -13,20 +13,23 @@
 /**
  *
 
- **/
-Route::get('/', 'WelcomeController@index');
-
-Route::get('home', 'HomeController@index');
-
-Route::controllers([
-    'auth' => 'Auth\AuthController',
-    'password' => 'Auth\PasswordController',
-]);
+// **/
+//Route::get('/', 'WelcomeController@index');
+//
+//Route::get('home', 'HomeController@index');
+//
+//Route::controllers([
+//    'auth' => 'Auth\AuthController',
+//    'password' => 'Auth\PasswordController',
+//]);
 
 
 //Route::get('usuario/restore', 'UserController@restore');
 //RUTAS PARA USUARIOS
+Route::get('change/{id}', array('uses' => 'UserController@change', 'as' => 'change'));
+Route::post('changepassword/{id}', array('uses' => 'UserController@changepassword', 'as' => 'changepassword'));
 Route::get('restore/{id}', array('uses' => 'UserController@restore', 'as' => 'restore'));
+Route::get('reset/{id}', array('uses' => 'UserController@reset', 'as' => 'reset'));
 Route::get('logout', 'LoginController@logout');
 Route::resource('login', 'LoginController');
 Route::resource('usuario', 'UserController');

@@ -144,6 +144,7 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		'Illuminate\Html\HtmlServiceProvider',
 		Collective\Html\HtmlServiceProvider::class,
 		Greggilbert\Recaptcha\RecaptchaServiceProvider::class,
 		Anchu\Ftp\FtpServiceProvider::class,
@@ -197,6 +198,8 @@ return [
 		'Form' => Collective\Html\FormFacade::class,
 		'Html' => Collective\Html\HtmlFacade::class,
 		'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
+		'Form'=> 'Illuminate\Html\FormFacade',
+		'HTML'=> 'Illuminate\Html\HtmlFacade'
 		
 	],
 

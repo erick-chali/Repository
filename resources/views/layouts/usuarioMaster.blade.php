@@ -43,6 +43,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="{{URL::to('/usuario/create')}}">Crear</a></li>
+                <li><a href="{{route('change', Auth::user()->codigo_usuario)}}">Cambiar mi contrase&ntilde;a</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

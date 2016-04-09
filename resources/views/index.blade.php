@@ -66,6 +66,12 @@
             {{--</label>--}}
         {{--</div>--}}
         <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+    @if(Session::has('loginfail'))
+        <div class="alert alert-danger" role="alert">
+            <label>{{Session::get('loginfail')}}</label>
+        </div>
+    @endif
+
     {{--</form>--}}
     {!! Form::close() !!}
 
